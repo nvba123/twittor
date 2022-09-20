@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Login</h1>
+    <form action="" method="POST">
+        <!-- The following line is required to convince WTForms to believe the form submission is valid when CSRF protection is on-->
+        {{ form.csrf_token }} 
+        <div>
+            {{ form.username.label }}
+            {{ form.username() }}
+        </div>
+        <div>
+            {{ form.password.label }}
+            {{ form.password() }}
+        </div>
+        <div>
+            {{ form.remember_me() }}
+            {{ form.remember_me.label }}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+    
+{% endblock %}
