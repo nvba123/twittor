@@ -1,10 +1,19 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from twittor.config import Config
+
+db = SQLAlchemy()
+migrate = Migrate()
+
+# Import after db is created
 from twittor.route import index, login
-import os
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = os.urandom(32) # A Secret key for preventing CSRF attack, required by WTForms
+    app.config.from_object(Config)
+    db.init_app(app)
+    migrate.init_app(app, db)
     app.add_url_rule('/', 'index', index)
     app.add_url_rule('/login', 'login', login, methods=["GET", "POST"])
     return app
